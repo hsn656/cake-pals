@@ -83,9 +83,32 @@ const fulfillOrder = async ({ orderId }, sellerId) => {
   );
 };
 
+const rateOrder = async ({ orderId, rating }, buyerId) => {
+  const order = await orderModel.findOne({
+    _id: orderId,
+    buyerId,
+    state: OrderStatesEnum.Fulfilled,
+  });
+  if (!order) throw ApiError.notFound();
+  const seller = await userModel.findById(order.sellerId);
+
+  seller.overAllRating =
+    (seller.overAllRating * seller.ratings.length + rating) /
+    (seller.ratings.length + 1);
+  seller.ratings.push({
+    rate: rating,
+    user: buyerId,
+  });
+
+  order.rate = rating;
+  await order.save();
+  return await seller.save();
+};
+
 module.exports = {
   createOrder,
   acceptOrder,
   rejectOrder,
   fulfillOrder,
+  rateOrder,
 };

@@ -7,6 +7,13 @@ const createOrderDto = {
   }),
 };
 
+const rateOrderDto = {
+  body: Joi.object({
+    rating: Joi.number().min(0).max(5).required(),
+  }),
+};
+
 module.exports = {
   createOrderDto,
+  rateOrderDto,
 };

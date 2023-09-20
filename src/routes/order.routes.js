@@ -1,7 +1,7 @@
 const express = require("express");
 
 const orderController = require("../controllers/order.controller");
-const { createOrderDto } = require("../dtos/order.dto");
+const { createOrderDto, rateOrderDto } = require("../dtos/order.dto");
 const { validate } = require("express-validation");
 const { verifyToken } = require("../middlewares/verifyToken");
 const { authorizeRoles } = require("../helpers/authorizeRoles");
@@ -35,6 +35,13 @@ router.patch(
   verifyToken,
   authorizeRoles(RolesEnum.Seller),
   orderController.fulfillOrder
+);
+
+router.patch(
+  "/:id/rate",
+  validate(rateOrderDto),
+  verifyToken,
+  orderController.rateOrder
 );
 
 module.exports = router;

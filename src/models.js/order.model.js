@@ -25,6 +25,9 @@ const orderSchema = new mongoose.Schema(
       enum: orderStatesArray,
       default: OrderStatesEnum.Pending,
     },
+    rate: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

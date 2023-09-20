@@ -44,9 +44,22 @@ const fulfillOrder = tryCatchWrapper(async (req, res) => {
   return res.status(200).json(formatSuccessRespnse(result));
 });
 
+const rateOrder = tryCatchWrapper(async (req, res) => {
+  const { rating } = req.body;
+  const result = await orderService.rateOrder(
+    {
+      orderId: req.params.id,
+      rating,
+    },
+    req.user.id
+  );
+  return res.status(200).json(formatSuccessRespnse(result));
+});
+
 module.exports = {
   createOrder,
   acceptOrder,
   rejectOrder,
-  fulfillOrder
+  fulfillOrder,
+  rateOrder,
 };
