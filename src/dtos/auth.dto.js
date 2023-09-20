@@ -1,5 +1,5 @@
 const { Joi } = require("express-validation");
-const { rolesArray } = require("../config/constants");
+const { rolesArray, RolesEnum } = require("../config/constants");
 
 const registerDto = {
   body: Joi.object({
@@ -8,6 +8,11 @@ const registerDto = {
     role: Joi.string()
       .required()
       .valid(...rolesArray),
+    location: Joi.when("role", {
+      is: RolesEnum.Seller,
+      then: Joi.array().required().items(Joi.number()).length(2),
+      otherwise: Joi.forbidden(),
+    }),
   }),
 };
 

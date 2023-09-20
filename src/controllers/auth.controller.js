@@ -3,8 +3,13 @@ const { formatSuccessRespnse } = require("../helpers/formatResponse");
 const authService = require("../services/auth.service");
 
 const register = tryCatchWrapper(async (req, res) => {
-  const { email, password, role } = req.body;
-  const result = await authService.register({ email, password, role });
+  const { email, password, role, location } = req.body;
+  const result = await authService.register({
+    email,
+    password,
+    role,
+    location,
+  });
   return res.status(201).json(formatSuccessRespnse(result));
 });
 
@@ -22,5 +27,5 @@ const profile = tryCatchWrapper(async (req, res) => {
 module.exports = {
   register,
   login,
-  profile
+  profile,
 };

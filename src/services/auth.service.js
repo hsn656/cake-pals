@@ -4,7 +4,7 @@ const userModel = require("../models.js/user.model");
 const ApiError = require("../error/api-error");
 const { generateAccessToken } = require("../helpers/jwt");
 
-const register = async ({ email, password, role }) => {
+const register = async ({ email, password, role, location }) => {
   const alreadyRegisteredUSer = await userModel
     .findOne({ email }, { _id: 1 })
     .lean();
@@ -13,7 +13,17 @@ const register = async ({ email, password, role }) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  return await userModel.create({ email, password: hashedPassword, role });
+  return await userModel.create({
+    email,
+    password: hashedPassword,
+    role,
+    ...(location && {
+      location: {
+        type: "Point",
+        coordinates: location,
+      },
+    }),
+  });
 };
 
 const login = async ({ email, password }) => {

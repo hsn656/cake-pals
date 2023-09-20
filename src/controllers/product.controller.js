@@ -36,8 +36,15 @@ const remove = tryCatchWrapper(async (req, res) => {
   return res.status(201).json(formatSuccessRespnse(result));
 });
 
+const list = tryCatchWrapper(async (req, res) => {
+  const { location, rangeInMeter, type } = req.body;
+  const result = await productService.list({ location, rangeInMeter, type });
+  return res.status(201).json(formatSuccessRespnse(result));
+});
+
 module.exports = {
   create,
   update,
   remove,
+  list
 };

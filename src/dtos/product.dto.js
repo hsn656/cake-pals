@@ -23,7 +23,18 @@ const updateProductDto = {
   }),
 };
 
+const listProductDto = {
+  body: Joi.object({
+    location: Joi.array().optional().items(Joi.number()).length(2),
+    rangeInMeter: Joi.number().min(0).optional(),
+    type: Joi.string()
+      .optional()
+      .valid(...productTypesArray),
+  }),
+};
+
 module.exports = {
   createProductDto,
-  updateProductDto
+  updateProductDto,
+  listProductDto,
 };
