@@ -10,10 +10,20 @@ const userSchema = new mongoose.Schema(
     location: {
       type: pointSchema,
     },
+    ratings: {
+      type: [
+        {
+          rate: { type: Number },
+          user: { type: mongoose.Schema.ObjectId },
+        },
+      ],
+      default: 0,
+    },
+    overAllRating: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
 
-userSchema.index({ location: '2dsphere' });
+userSchema.index({ location: "2dsphere" });
 
 module.exports = mongoose.model("User", userSchema);
