@@ -5,7 +5,18 @@ const RolesEnum = {
 
 const rolesArray = ["member", "seller"];
 
+const productTypesArray = [
+  "pie",
+  "cake"
+]
+const ProductTypesEnum = {
+  Pie: "pie",
+  Cake: "cake",
+};
+
 module.exports = {
   RolesEnum,
-  rolesArray
+  rolesArray,
+  productTypesArray,
+  ProductTypesEnum
 };
