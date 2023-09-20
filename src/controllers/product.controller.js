@@ -42,9 +42,17 @@ const list = tryCatchWrapper(async (req, res) => {
   return res.status(200).json(formatSuccessRespnse(result));
 });
 
+const checkAvailablity = tryCatchWrapper(async (req, res) => {
+  const result = await productService.checkAvailablity({
+    productId: req.params.id,
+  });
+  return res.status(200).json(formatSuccessRespnse(result));
+});
+
 module.exports = {
   create,
   update,
   remove,
-  list
+  list,
+  checkAvailablity,
 };

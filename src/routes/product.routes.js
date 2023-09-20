@@ -3,7 +3,11 @@ const { validate } = require("express-validation");
 
 const productController = require("../controllers/product.controller");
 const { verifyToken } = require("../middlewares/verifyToken");
-const { createProductDto, updateProductDto, listProductDto } = require("../dtos/product.dto");
+const {
+  createProductDto,
+  updateProductDto,
+  listProductDto,
+} = require("../dtos/product.dto");
 const { authorizeRoles } = require("../helpers/authorizeRoles");
 const { RolesEnum } = require("../config/constants");
 
@@ -33,5 +37,7 @@ router.delete(
   authorizeRoles(RolesEnum.Seller),
   productController.remove
 );
+
+router.get("/:id/availablity", productController.checkAvailablity);
 
 module.exports = router;

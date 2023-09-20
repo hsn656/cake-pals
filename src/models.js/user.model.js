@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
       default: 0,
     },
     overAllRating: { type: Number, default: 0 },
+    availableFrom: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

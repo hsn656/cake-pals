@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 const { RolesEnum } = require("../config/constants");
 const productModel = require("../models.js/product.model");
 const userModel = require("../models.js/user.model");
@@ -60,9 +62,26 @@ const list = async ({ location, rangeInMeter, type }) => {
   });
 };
 
+const checkAvailablity = async ({ productId }) => {
+  const product = await productModel.findOne({
+    _id: productId,
+  });
+  const seller = await userModel.findById(product.sellerId);
+  if (seller.availableFrom < new Date()) seller.availableFrom = new Date();
+  const nextAvailableTime = moment(seller.availableFrom).add(
+    product.preparationTime,
+    "hours"
+  );
+
+  return {
+    nextAvailableTime: nextAvailableTime.toDate()
+  }
+};
+
 module.exports = {
   create,
   update,
   remove,
   list,
+  checkAvailablity,
 };
