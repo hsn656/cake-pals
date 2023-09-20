@@ -1,7 +1,5 @@
 const winston = require('winston');
 const correlation = require('express-correlation-id');
-const dotenv = require('dotenv');
-dotenv.config();
 
 class LoggerUtils {
   static instance;
