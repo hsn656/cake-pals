@@ -5,7 +5,7 @@ const config = {
     port: process.env.PORT || 5000,
   },
   db: {
-    url: process.env.DB_URL || "mongodb://localhost:27017/cake-pals",
+    url: process.env.DB_URL || "mongodb://mongo:27017/cake-pals",
   },
   jwt: {
     secret: process.env.JWT_SECRET || "not-jwt-secret",

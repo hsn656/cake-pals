@@ -17,13 +17,19 @@ const userSchema = new mongoose.Schema(
           user: { type: mongoose.Schema.ObjectId },
         },
       ],
-      default: 0,
+      default: [],
     },
     overAllRating: { type: Number, default: 0 },
     availableFrom: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
+
+userSchema.methods.toJSON = function() {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 userSchema.index({ location: "2dsphere" });
 

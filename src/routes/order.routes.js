@@ -1,7 +1,11 @@
 const express = require("express");
 
 const orderController = require("../controllers/order.controller");
-const { createOrderDto, rateOrderDto } = require("../dtos/order.dto");
+const {
+  createOrderDto,
+  rateOrderDto,
+  listOrdersDto,
+} = require("../dtos/order.dto");
 const { validate } = require("express-validation");
 const { verifyToken } = require("../middlewares/verifyToken");
 const { authorizeRoles } = require("../helpers/authorizeRoles");
@@ -14,6 +18,14 @@ router.post(
   validate(createOrderDto),
   verifyToken,
   orderController.createOrder
+);
+
+router.post(
+  "/list",
+  validate(listOrdersDto),
+  verifyToken,
+  authorizeRoles(RolesEnum.Seller),
+  orderController.listOrders
 );
 
 router.patch(

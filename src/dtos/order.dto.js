@@ -1,4 +1,5 @@
 const { Joi } = require("express-validation");
+const { orderStatesArray } = require("../config/constants");
 
 const createOrderDto = {
   body: Joi.object({
@@ -13,7 +14,16 @@ const rateOrderDto = {
   }),
 };
 
+const listOrdersDto = {
+  body: Joi.object({
+    state: Joi.string()
+      .optional()
+      .valid(...orderStatesArray),
+  }),
+};
+
 module.exports = {
   createOrderDto,
   rateOrderDto,
+  listOrdersDto,
 };

@@ -89,7 +89,11 @@ const rateOrder = async ({ orderId, rating }, buyerId) => {
     buyerId,
     state: OrderStatesEnum.Fulfilled,
   });
+
   if (!order) throw ApiError.notFound();
+  if (order.rate !== undefined)
+    throw ApiError.badRequest("you have already rated this order");
+
   const seller = await userModel.findById(order.sellerId);
 
   seller.overAllRating =
@@ -105,10 +109,20 @@ const rateOrder = async ({ orderId, rating }, buyerId) => {
   return await seller.save();
 };
 
+const listOrders = async ({ state }, sellerId) => {
+  return await orderModel
+    .find({
+      sellerId,
+      ...(state && { state }),
+    })
+    .sort({ createdAt: -1 });
+};
+
 module.exports = {
   createOrder,
   acceptOrder,
   rejectOrder,
   fulfillOrder,
   rateOrder,
+  listOrders,
 };
