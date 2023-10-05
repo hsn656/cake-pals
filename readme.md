@@ -11,6 +11,7 @@ bake and hand over ready products at the agreed collection time.
 - Node.js
 - Mongodb
 - Express
+- Docker
 
 ## Getting Started
 
@@ -22,7 +23,7 @@ To get started with this project, follow these steps:
 ```bash 
 cd cake-pals/
 ```
-- start postgres database.
+- start the application.
 
 ```bash
 docker-compose up -d
